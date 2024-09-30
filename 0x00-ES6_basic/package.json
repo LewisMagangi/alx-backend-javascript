@@ -1,0 +1,7 @@
+{
+    "name": "alx-backend-javascript",
+    "type": "module",
+    "scripts": {
+	"dev": "node 0-main.js"
+    }
+}

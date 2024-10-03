@@ -1,19 +1,30 @@
-export default {
-    env: {
-	browser: true,
-	es2021: true,
-    },
-    extends: [
-	"eslint:recommended",
-	"plugin:node/recommended"
-    ],
-    parserOptions: {
-	ecmaVersion: 12,
-	sourceType: "module",
+import globals from "globals";
+import pluginJs from "@eslint/js";
+import pluginJest from "eslint-plugin-jest";
+
+export default [
+  {
+    files: ["**/*.{js,mjs,cjs}"],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      globals: {
+        ...globals.browser,
+        ...globals.jest,
+        ...globals.node
+      },
+    }
+  },
+  pluginJs.configs.recommended,
+  {
+    plugins: {
+      jest: pluginJest
     },
     rules: {
-	// Customize your rules here
-	"no-console": "warn",
-	"no-unused-vars": "warn",
-    },
-};
+      "jest/no-disabled-tests": "warn",
+      "jest/no-focused-tests": "error",
+      "jest/prefer-to-have-length": "warn",
+      "jest/consistent-test-it": ["error", { fn: "test" }]
+    }
+  }
+];

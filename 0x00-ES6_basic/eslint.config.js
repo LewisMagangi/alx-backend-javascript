@@ -1,30 +1,35 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
-import pluginJest from "eslint-plugin-jest";
-
-export default [
-  {
-    files: ["**/*.{js,mjs,cjs}"],
-    languageOptions: {
-      ecmaVersion: 2022,
-      sourceType: 'module',
-      globals: {
-        ...globals.browser,
-        ...globals.jest,
-        ...globals.node
-      },
-    }
+module.exports = {
+  env: {
+    browser: false,
+    es6: true,
+    jest: true,
   },
-  pluginJs.configs.recommended,
-  {
-    plugins: {
-      jest: pluginJest
-    },
-    rules: {
-      "jest/no-disabled-tests": "warn",
-      "jest/no-focused-tests": "error",
-      "jest/prefer-to-have-length": "warn",
-      "jest/consistent-test-it": ["error", { fn: "test" }]
+  extends: [
+    'airbnb-base',
+    'plugin:jest/all',
+  ],
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+  },
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: 'module',
+  },
+  plugins: ['jest'],
+  rules: {
+    'no-console': 'off',
+    'no-shadow': 'off',
+    'no-restricted-syntax': [
+      'error',
+      'LabeledStatement',
+      'WithStatement',
+    ],
+  },
+  overrides:[
+    {
+      files: ['*.js'],
+      excludedFiles: 'babel.config.js',
     }
-  }
-];
+  ]
+};

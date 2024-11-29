@@ -1,11 +1,25 @@
-const assert = require('assert');
-const displayMessage = require('./0-console');  // Adjust the path as needed
+const { expect } = require('chai');
+const sinon = require('sinon');
 
-describe('Display Message', function() {
-    it('should print the message correctly', function() {
-        assert.doesNotThrow(() => {
-            displayMessage("Hello NodeJS!");
-        });
-    });
+const displayMessage = require('./0-console');
+
+describe('displayMessage', () => {
+  let consoleSpy;
+
+  beforeEach(() => {
+    consoleSpy = sinon.spy(console, 'log');
+  });
+
+  afterEach(() => {
+    consoleSpy.restore();
+  });
+
+  it('logs to the console the right messages', () => {
+    displayMessage('Hello Holberton School!');
+    displayMessage('We are going to learn Node JS today');
+
+    expect(consoleSpy.calledWith('Hello Holberton School!')).to.be.true;
+    expect(consoleSpy.calledWith('We are going to learn Node JS today')).to.be.true;
+  });
 });
 
